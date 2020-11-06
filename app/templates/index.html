@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+{% set data_pic = data['photos']%}
+<img src="{{data_pic[0]['src']['landscape']}}" alt="{{ data_pic[0]['id']}}" height="300px">
+<ul>
+{% for i in range(1,(data_pic)|length) %}
+<li><img src="{{data_pic[i]['src']['tiny']}}" alt="{{ data_pic[i]['id']}}" height="60"></li>
+{% endfor %}
+</ul>
+{% endblock %}
