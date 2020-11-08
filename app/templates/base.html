@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for('static',filename= 'images/favicon.ico')}}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static',filename= 'css/style.css')}}">
     <title>
         {% if title %}
@@ -14,22 +15,40 @@
 </head>
 <body>
     <div class="header">
-        <nav>
-            <div class="nav-wrapper">
-                <a href="#" class="brand-logo">Logo</a>
-                <ul id="nav-mobile">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
+        <div class="box-left">
+            <div class="brand">
+                <a href="{{ url_for('index') }}" class="brand-logo">Wally</a>
+            </div>
+           
+        </div>
+            <div class="box-right">
+                <div class="search-bar">
+                    <form action="/search" method='POST' class='search-form'>
+                        <input id="search-input" name='query' type="text" placeholder="Search Your Wallpaper here">
+                        <input id="search-button" type="submit" value="Search">
+                    </form>
+                </div>
+                
+                <ul class="nav-mobile">
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('index') }}">About</a></li>
+                    <li><a href="{{ url_for('index') }}">Contact</a></li>
                 </ul>
             </div>
         </nav>
     </div>
-    {% block content %}
-    {% endblock %}
+    <div class="main">
+        <div class="content">
+            {% block main %}
+            {% endblock %}
+        </div>
+        
+    </div>
     <div class="footer">
-        <p>&copy;2020</p>
-        <a href="#">abc@abc.com</a>
+        <div class="footer-content">
+            <p>&copy;2020 <a href="#">wally@msrahul.com</a></p>
+        </div>
+       
     </div>    
 </body>
 </html>

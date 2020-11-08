@@ -1,10 +1,61 @@
 {% extends 'base.html' %}
-{% block content %}
-{% set data_pic = data['photos']%}
-<img src="{{data_pic[0]['src']['landscape']}}" alt="{{ data_pic[0]['id']}}" height="300px">
-<ul>
-{% for i in range(1,(data_pic)|length) %}
-<li><img src="{{data_pic[i]['src']['tiny']}}" alt="{{ data_pic[i]['id']}}" height="60"></li>
-{% endfor %}
-</ul>
+{% block main %}
+
+<div class="row-1">
+    {% if not id_index %}
+        {% set id_index = 0%}
+    {% endif %}
+    <div class="left-slider">
+        <a href="{{ url_for('view',current_index=id_index, query= query, next='backward') }}" class="prev">❮</a>
+    </div>
+    
+    <img class='slides' 
+    
+    src="{{ data['photos'][id_index]['src']['landscape'] }}" >
+     
+    <div class="right-slider">
+        <a href="{{ url_for('view',current_index=id_index, query= query, next='forward') }}" class="next">❯</a>
+    </div>               
+    
+</div>
+<form class="row-2" action="/download/{{id_index}}" method='POST'>
+    <div class="options-row">
+        <label class="options" for="size">Select Size:</label>
+        <div class="options">
+            <select name="size" id="size">
+                <option value="landscape">landscape</option>
+                <option value="original">original</option>
+                <option value="large2x">large2x</option>
+                <option value="large">large</option>
+                <option value="medium">medium</option>'
+                <option value="small">small</option>
+                <option value="portrait">portrait</option>                
+                <option value="tiny">tiny</option>
+                
+            </select>                    
+        </div>
+    </div>
+    
+    <div class="dwn-button">
+        <input id="download-button" type="submit" value="Download">
+    </div>
+</form>
+<div class="row-3">
+    {% for pic in data['photos'] %}
+        {% if data['photos'][id_index]['id'] != pic['id'] %}
+            <div class="slide-preview">
+                <a href="{{ url_for('view',id=pic['id'], query=query)}}">
+                <img src="{{ pic['src']['tiny'] }}">
+            </a>
+            </div>
+        {% endif %}
+    {% endfor %}    
+</div>
+<div class="row-4">
+    {% if data['page'] > 1 %}
+        <a href="{{ url_for('nav', page= data['page']-1, query= query) }}" class="previous">Previous</a>
+    {% endif %}
+        <a href="{{ url_for('nav', page= data['page']+1, query= query) }}" class="next">Next</a>
+</div>
+
 {% endblock %}
